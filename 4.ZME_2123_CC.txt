@@ -1,0 +1,40 @@
+@Metadata.layer: #CORE
+annotate entity ZC_2123_CC with
+{
+
+  @UI.lineItem: [{ position: 10 , label: 'Cost Center' },
+                { type: #FOR_ACTION , position: 20, dataAction: 'UploadTemplate', label: 'Upload Excel'},
+                { type: #FOR_ACTION , position: 10, dataAction: 'downloadTemplate', label: 'Download Template'
+                }
+                ]
+  @UI.selectionField: [{ position: 10 }]
+  @EndUserText.label: 'Cost Center'
+  Costcenter;
+  @UI.lineItem: [{ position: 20 , label: 'Cost Center Group'}]
+  @UI.selectionField: [{ position: 20 }]
+  @EndUserText.label: 'Cost Center Group'
+  CostctrHierGrp;
+  @UI.lineItem: [{ position: 30 ,label: 'Valid To ' }]
+  ValidTo;
+  @UI.lineItem: [{ position: 40 ,label: 'Valid From' }]
+  @UI.selectionField: [{ position: 30 }]
+  @EndUserText.label: 'Valid From'
+  ValidFrom;
+  @UI.lineItem: [{ position: 50 , label: 'Cost Center Type'}]
+  CostcenterType;
+  @UI.lineItem: [{ position: 60 ,  label: 'Company Code'}]
+  CompCode;
+  @UI.lineItem: [{ position: 70,label: 'Profit Center'}]
+  ProfitCtr;
+  @UI.lineItem: [{ position: 80 ,label: 'Person Responsible' }]
+  PersonInCharge;
+  @UI.lineItem: [{ position: 90 ,label: 'Cost Center Name'}]
+  Name;
+  @UI.lineItem: [{ position: 100 ,label: 'Created By'}]
+  LocalCreatedBy;
+  @UI.lineItem: [{ position: 110 , label:'Changed By' }]
+  LastChangedBy;
+  @UI.lineItem: [{ position: 120 ,label: 'Changed At' }]
+  LastChangedAt;
+
+}

@@ -1,0 +1,43 @@
+managed implementation in class zbp_i_0226_cc unique;
+strict ( 2 );
+with draft;
+define behavior for ZI_0226_CC alias CostCenter
+persistent table zt0226_cc
+draft table zt0226_cc_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+  field ( readonly ) LastChangedAt, LocalCreatedBy, LocalLastChangedAt, LastChangedBy;
+  field ( mandatory : create ) Costcenter, CostctrHierGrp, ValidTo;
+  field ( readonly : update ) Costcenter, CostctrHierGrp, ValidTo;
+  static action downloadTemplate;
+  static action uploadExcel parameter ZAE_EXCEL_FILE_PARAM;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+
+  mapping for zt0226_cc
+    {
+      Costcenter         = costcenter;
+      CompCode           = comp_code;
+      ValidFrom          = valid_from;
+      ValidTo            = valid_to;
+      CostcenterType     = costcenter_type;
+      CostctrHierGrp     = costctr_hier_grp;
+      Name               = name;
+      PersonInCharge     = person_in_charge;
+      ProfitCtr          = profit_ctr;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+      LastChangedBy      = last_changed_by;
+      LocalCreatedBy     = local_created_by;
+    }
+}

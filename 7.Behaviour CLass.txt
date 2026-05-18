@@ -1,0 +1,85 @@
+CLASS lhc_CostCenter DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR CostCenter RESULT result.
+    METHODS downloadtemplate FOR MODIFY
+      IMPORTING keys FOR ACTION costcenter~downloadtemplate.
+    METHODS uploadexcel FOR MODIFY
+      IMPORTING keys FOR ACTION costcenter~uploadexcel.
+
+ENDCLASS.
+
+CLASS lhc_CostCenter IMPLEMENTATION.
+
+  METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD downloadTemplate.
+  ENDMETHOD.
+
+  METHOD uploadExcel.
+    DATA: lt_excel        TYPE STANDARD TABLE OF zbp_i_0226_cc=>gty_excel,
+          lt_data_create  TYPE TABLE FOR CREATE zi_0226_cc,
+          lv_file_content TYPE xstring.
+
+    lv_file_content = VALUE #( keys[ 1 ]-%param-fileContent OPTIONAL ).
+
+    DATA(lo_document) = xco_cp_xlsx=>document->for_file_content( lv_file_content )->read_access( ).
+
+    DATA(lo_worksheet) = lo_document->get_workbook( )->worksheet->at_position( 1 ).
+
+    DATA(o_sel_pattern) = xco_cp_xlsx_selection=>pattern_builder->simple_from_to(
+    )->from_row( xco_cp_xlsx=>coordinate->for_numeric_value( 2 ) " *** Start reading from ROW 2 to skip the header ***
+    )->get_pattern( ).
+
+    lo_worksheet->select( o_sel_pattern
+    )->row_stream(
+    )->operation->write_to( REF #( lt_excel )
+    )->set_value_transformation(
+    xco_cp_xlsx_read_access=>value_transformation->string_value
+    )->execute( ).
+
+    lt_data_create = VALUE #( FOR wa IN lt_excel INDEX INTO lv_index
+    ( %cid = |CID_{ lv_index }|
+    %data = VALUE #(
+    Costcenter = wa-costcenter
+    CostctrHierGrp = wa-costcentergrp
+    ValidTo = wa-validto
+    validfrom = wa-validfrom
+    CompCode = wa-companycode
+    CostcenterType = wa-costcentertype
+    Name = wa-name
+    PersonInCharge = wa-personresp
+    ProfitCtr = wa-profitcenter
+
+    )
+    %control = VALUE #(
+    Costcenter = if_abap_behv=>mk-on
+    CostctrHierGrp = if_abap_behv=>mk-on
+    ValidTo = if_abap_behv=>mk-on
+    ValidFrom = if_abap_behv=>mk-on
+    CompCode = if_abap_behv=>mk-on
+    CostcenterType = if_abap_behv=>mk-on
+    name = if_abap_behv=>mk-on
+    PersonInCharge = if_abap_behv=>mk-on
+    ProfitCtr = if_abap_behv=>mk-on
+
+    )
+
+    )
+
+    ).
+*
+    MODIFY ENTITIES OF zi_0226_cc IN LOCAL MODE
+    ENTITY CostCenter
+    CREATE FIELDS ( Costcenter CostctrHierGrp ValidTo ValidFrom CostcenterType CompCode Name PersonInCharge ProfitCtr )
+    WITH lt_data_create
+    MAPPED DATA(lt_mapped)
+    REPORTED DATA(lt_reported)
+    FAILED DATA(lt_failed).
+
+
+  ENDMETHOD.
+
+ENDCLASS.

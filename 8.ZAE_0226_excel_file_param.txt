@@ -1,0 +1,9 @@
+@EndUserText.label: 'excel file parameter'
+define abstract entity ZAE_0226_EXCEL_FILE_PARAM
+
+{
+  mimeType    : abap.string(0);
+  fileName    : abap.string(0);
+  fileContent : abap.rawstring(0);
+  
+}

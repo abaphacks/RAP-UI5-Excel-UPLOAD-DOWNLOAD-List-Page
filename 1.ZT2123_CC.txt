@@ -1,0 +1,23 @@
+@EndUserText.label : 'Cost center  table'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table zt2123_cc {
+
+  key client            : abap.clnt not null;
+  key costcenter        : abap.char(10) not null;
+  key costctr_hier_grp  : abap.char(12) not null;
+  key valid_to          : abap.dats not null;
+  valid_from            : abap.dats;
+  costcenter_type       : abap.char(1);
+  comp_code             : abap.char(4);
+  profit_ctr            : abap.char(10);
+  person_in_charge      : abap.char(12);
+  name                  : abap.char(20);
+  local_created_by      : abp_creation_user;
+  last_changed_by       : abp_lastchange_user;
+  last_changed_at       : abp_lastchange_tstmpl;
+  local_last_changed_at : abp_locinst_lastchange_tstmpl;
+
+}

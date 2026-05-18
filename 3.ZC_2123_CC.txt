@@ -1,0 +1,21 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'cost center projection view'
+@Metadata.ignorePropagatedAnnotations: true
+@Metadata.allowExtensions: true
+define root view entity ZC_2123_CC
+  as projection on ZI_2123_CC
+{
+  key Costcenter,
+  key CostctrHierGrp,
+  key ValidTo,
+      ValidFrom,
+      CostcenterType,
+      CompCode,
+      ProfitCtr,
+      PersonInCharge,
+      Name,
+      LocalCreatedBy,
+      LastChangedBy,
+      LastChangedAt,
+      LocalLastChangedAt
+}

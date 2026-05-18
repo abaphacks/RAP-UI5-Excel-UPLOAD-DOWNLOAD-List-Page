@@ -1,0 +1,21 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'cost center root view'
+@Metadata.ignorePropagatedAnnotations: true
+define root view entity ZI_2123_CC
+  as select from zt2123_cc
+
+{
+  key costcenter            as Costcenter,
+  key costctr_hier_grp      as CostctrHierGrp,
+  key valid_to              as ValidTo,
+      valid_from            as ValidFrom,
+      costcenter_type       as CostcenterType,
+      comp_code             as CompCode,
+      profit_ctr            as ProfitCtr,
+      person_in_charge      as PersonInCharge,
+      name                  as Name,
+      local_created_by      as LocalCreatedBy,
+      last_changed_by       as LastChangedBy,
+      last_changed_at       as LastChangedAt,
+      local_last_changed_at as LocalLastChangedAt
+}
