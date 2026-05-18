@@ -3,7 +3,6 @@ annotate entity ZC_2123_CC with
 {
 
   @UI.lineItem: [{ position: 10 , label: 'Cost Center' },
-                { type: #FOR_ACTION , position: 20, dataAction: 'UploadTemplate', label: 'Upload Excel'},
                 { type: #FOR_ACTION , position: 10, dataAction: 'downloadTemplate', label: 'Download Template'
                 }
                 ]
